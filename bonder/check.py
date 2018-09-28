@@ -6,7 +6,7 @@ from sys import exit
 
 def get_unbonded_atom(address):
     try:
-        process = subprocess.check_output("ls", shell=True)
+        process = subprocess.check_output("gaiacli account %s" % (address), shell=True, stderr=subprocess.STDOUT)
         return {
             "success": True,
             "output": process
@@ -19,20 +19,17 @@ def get_unbonded_atom(address):
 
 
 def bond_steak(address_validator, name, steak, chain_id):
-    process = subprocess.Popen("gaiacli stake delegate --amount=%s --address-validator=%s --name=%s --chain-id=%s" % (steak, address_validator, name, chain_id), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    if process.returncode is 0:
+    try:
+        process = subprocess.check_output("gaiacli stake delegate --amount=%s --address-validator=%s --name=%s --chain-id=%s" % (steak, address_validator, name, chain_id), shell=True, stderr=subprocess.STDOUT)
         return {
             "success": True,
-            "code": process.returncode,
-            "output": process.stdout.read()
+            "output": process
         }
-    else:
+    except subprocess.CalledProcessError as err:
         return {
             "success": False,
-            "code": process.returncode,
-            "output": process.stdout.read()
+            "output": err.output
         }
-    return
 
 
 def check_bonder(address, address_validator, chain_id, name, verbose):
@@ -53,7 +50,7 @@ def check_bonder(address, address_validator, chain_id, name, verbose):
         click.echo("Found %s steak" %(steak))
 
     if steak > 0:
-        bond = bond_steak(name, address, steak, chain_id
+        bond = bond_steak(name, address, steak, chain_id)
         if not bond['success']:
             click.secho("Error bonding steak:", fg="red", bold=True)
             print(bond)

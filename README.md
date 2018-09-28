@@ -55,7 +55,8 @@ Options:
 $ bonder start \
     --address=cosmosaccaddr1j0sjgc7c0pdgqrgkcf5hdl5gn0453027h7ucsg \
     --address_validator=cosmosaccaddr10505nl7yftsme9jk2glhjhta7w0475uva87paj \
-    --name=wallet1
+    --name=wallet1 \
+    --chain_id=gaia-8001
 ```
 
 ## Execution
