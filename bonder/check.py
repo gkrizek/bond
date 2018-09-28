@@ -9,7 +9,7 @@ def get_unbonded_atom(address):
         process = subprocess.check_output("gaiacli account %s" % (address), shell=True, stderr=subprocess.STDOUT)
         return {
             "success": True,
-            "output": process
+            "output": json.loads(process)
         }
     except subprocess.CalledProcessError as err:
         return {
@@ -40,8 +40,7 @@ def check_bonder(address, address_validator, chain_id, name, verbose):
         click.secho("Error getting account information:", fg="red", bold=True)
         print(account)
         exit(1)
-    account = json.loads(account['output'])
-    coin_list = account['value']['coins']
+    coin_list = account['output']['value']['coins']
     for c in coin_list:
         if c['denom'] == 'steak':
             steak = c['amount']
