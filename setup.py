@@ -1,5 +1,5 @@
 from setuptools import setup
-from beam import __version__
+from bonder import __version__
 
 
 def readme():
