@@ -21,6 +21,6 @@ setup(
         "click"
     ],
     entry_points={
-        "console_scripts": ['bonder = bonder.index:main']
+        "console_scripts": ['bonder = bonder.index:bonder']
     }
 )
