@@ -1,0 +1,14 @@
+[Unit]
+Description=Bonder
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=bonder start --address=cosmosaccaddr1j0sjgc7c0pdgqrgkcf5hdl5gn0453027h7ucsg --address_validator=cosmosaccaddr10505nl7yftsme9jk2glhjhta7w0475uva87paj --name=wallet1 --chain-id=gaia-8001
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
